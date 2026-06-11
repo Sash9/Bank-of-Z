@@ -7,18 +7,22 @@ mappings:
         required: false
         nullable: false
         mappings:
-        - COMM-KEY:
+        - COMM-NAME:
             required: false
             nullable: false
             mappings:
-            - COMM-SORTCODE:
+            - COMM-TITLE:
                 required: false
                 nullable: false
-                expression: "987654"
-            - COMM-NUMBER:
+                expression: "$body.title"
+            - COMM-FIRST-NAME:
                 required: false
                 nullable: false
-                expression: "0"
+                expression: "$exists(body.firstName) ? $body.firstName : \"\""
+            - COMM-LAST-NAME:
+                required: false
+                nullable: false
+                expression: "$exists(body.lastName) ? $body.firstName : \"\""
         - COMM-DOB:
             required: false
             nullable: false
@@ -26,48 +30,47 @@ mappings:
             - COMM-DOB-DAY:
                 required: false
                 nullable: false
-                expression: "'15'"
+                expression: "$exists($body.dateOfBirth) and $length($body.dateOfBirth) = 10 
+                ? $number($substring($body.dateOfBirth, 8, 2)) : 0"
             - COMM-DOB-MONTH:
                 required: false
                 nullable: false
-                expression: "'01'"
+                expression: "$exists($body.dateOfBirth) and $length($body.dateOfBirth) = 10 
+                ? $number($substring($body.dateOfBirth, 5, 2)) : 0"
             - COMM-DOB-YEAR:
                 required: false
                 nullable: false
-                expression: "'1990'"
-        - COMM-CREATED-DATE:
+                expression: "$exists($body.dateOfBirth) and $length($body.dateOfBirth) = 10 
+                ? $number($substring($body.dateOfBirth, 0, 4)) : 0"
+        - COMM-PHONE:
+            required: false
+            nullable: false
+            expression: "$body.phoneNumber"
+        - COMM-ADDR:
             required: false
             nullable: false
             mappings:
-            - COMM-CREATED-DAY:
+            - COMM-ADDR-LINE1:
                 required: false
                 nullable: false
-                expression: "'0'"
-            - COMM-CREATED-MONTH:
+                expression: "$body.address.addressLine1"
+            - COMM-ADDR-LINE2:
                 required: false
                 nullable: false
-                expression: "'0'"
-            - COMM-CREATED-YEAR:
+                expression: "$body.address.addressLine2"
+            - COMM-CITY:
                 required: false
                 nullable: false
-                expression: "'0'"
-        - COMM-CREDIT-SCORE:
+                expression: "$body.address.city"
+            - COMM-POSTCODE:
+                required: false
+                nullable: false
+                expression: "$body.address.postalCode"
+            - COMM-COUNTRY:
+                required: false
+                nullable: false
+                expression: "$body.address.country"
+        - COMM-STATUS:
             required: false
             nullable: false
-            expression: "'0'"
-        - COMM-CS-REVIEW-DATE:
-            required: false
-            nullable: false
-            mappings:
-            - COMM-CS-REVIEW-DAY:
-                required: false
-                nullable: false
-                expression: "'0'"
-            - COMM-CS-REVIEW-MONTH:
-                required: false
-                nullable: false
-                expression: "'0'"
-            - COMM-CS-REVIEW-YEAR:
-                required: false
-                nullable: false
-                expression: "'0'"
+            expression: "$body.customerStatus"

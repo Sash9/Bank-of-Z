@@ -6,8 +6,8 @@ mappings:
     - code:
         required: true
         nullable: false
-        template: "INTERNAL_SERVER_ERROR"
+        template: "BAD_REQUEST"
     - message:
         required: true
         nullable: false
-        template: "An internal server error occurred"
+        template: "Invalid request parameters — check title, date of birth, and required fields"
